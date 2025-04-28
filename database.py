@@ -34,25 +34,23 @@ for s in sales:
 def fetchProducts():
 
     cur.execute('select * from products;')
-
     products = cur.fetchall()
-
-    for p in products:
+    return products
+    # for p in products:
         # return p -> NOT APPLICABLE
-        print(p)
-
+        # print(p)
+    
 # FETCH ALL SALES TABLE FUNCTION
 def fetchSales():
 
     # cur -> LOCAL VARIABLE which is used inside a function, hence 'cur' VARIABLE that exists outside a function can be used by a function, it doesn't have to exist inside a function.
     cur.execute('select * from sales')
-
     sales = cur.fetchall()
-
-    for s in sales:
+    return sales
+    # for s in sales:
         # return s -> NOT APPLICABLE
-        print(s)
-
+        # print(s)
+    
 print('')
 print('list of tuples in products table using fetchProducts() function')
 fetchProducts()

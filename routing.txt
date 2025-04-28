@@ -12,7 +12,7 @@ Examples of frameworks
 - Java frameworks e.g. Spring
 - Ruby frameworks e.g. Ruby on Ruby Rails
 
-We use frameworks on top of languages - comes with ready made for you to build your application.
+We use frameworks on top of languages - comes with ready-made libraries for you to build your application.
 
 Library - Pre-written code that helps you solve specific problems or add certain features.
 
@@ -56,7 +56,7 @@ def products() :
 @app.route('/login')
 def login() :
 
-# Parameters that can be passed in a route function
+# What parameters can we pass in a route function?
 1. Rule - e.g. /, /products, /sales, /users - defines the path a user accesses in the browser
 
 DAY 71 2025-04-24 (Thursday)
@@ -111,9 +111,9 @@ Goal: Display a html page/file using Flask
     # Example of a tool in Flask - Jinja
 
     # What is Jinja?
-        - A templating engine that is integrated with Flask to render (or return) dynamic HTML pages. {Dynamic - can 
+        - A templating engine that is integrated with Flask to render (or return) dynamic HTML webpages. {Dynamic - can 
             take some data which changes depending on the user input}
-        - Templating engine - A tool in web development used to generate dynamic HTML.
+        - Templating engine - A tool in web development used to generate dynamic HTML webpages.
 
     # What can Jinja do?
         - Helps you pass data or perform Python logic inside HTML templates.
@@ -162,3 +162,18 @@ Task:
     1. Create another list in another route and loop through it using Jinja to pass list values in a html page.
 
     2. Go and create tables using borrowed css {bootstrap} - use bootstrap to create tables with random data.
+
+# DAY 73 2025-04-28 (Monday)
+
+Display our database data on our browsers
+
+Assumption - You can already view your printed data on your terminal.
+
+1. Get our data to main.py from database.py
+    - using import functionality.
+    - import functions that fetch data (products, sales) inside main.py
+    - we're going to call these functions inside main.py using variables and then we pass those variables to HTML using Jinja.
+
+    - we want to display our products
+    - index.html, products.html, sales.html, dashboard.html
+    - navbar

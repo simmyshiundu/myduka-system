@@ -8,17 +8,27 @@
 </head>
 
 <body>
-    <div>
-        <!-- {% if data %}
+    <!-- <div>
+        {% if data %}
         <p>Hello, {{data}}</p>
         MYDUKA APPLICATION - Home page returned with render_template()
         {% else %}
         <p>Data not provided</p>
-        {% endif %} -->
+        {% endif %}
     </div>
     <div>
-        {% for number in data %} <!--  starting point -->
-        <li>{{number}}</li>
+        {% if data_dict %}
+        <p>Hello, {{data_dict}}</p>
+        MYDUKA APPLICATION - Home page returned with render_template()
+        {% else %}
+        <p>Data not provided</p>
+        {% endif %}
+    </div> -->
+    <div>
+        {% for number in numbers %} <!--  starting point -->
+        <ul>
+            <li>{{number}}</li>
+        </ul>
         {% endfor %} <!--  ending point -->
     </div>
 </body>
