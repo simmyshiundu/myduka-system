@@ -1,0 +1,164 @@
+DAY 70 2025-04-23 (Wednesday) - Brian
+
+FLASK
+
+Flask - A microframework used to build applications.
+
+Framework - Software we use to build applications
+
+Examples of frameworks
+- Python frameworks e.g. Flask, Django, FastAPI
+- C# frameworks e.g. .NET
+- Java frameworks e.g. Spring
+- Ruby frameworks e.g. Ruby on Ruby Rails
+
+We use frameworks on top of languages - comes with ready made for you to build your application.
+
+Library - Pre-written code that helps you solve specific problems or add certain features.
+
+# Concept of building a house
+# Option 1 - Library
+Identify land, identify requirements, go to a hardware buy all materials, design the house himself, build the house 
+himself.
+
+# Option 2 - Framework
+He could go to an architect and engineer and get a pre-designed house (blueprint) with all tools and materials already 
+identified and provided. 
+
+A framework is structured hence the programmer has to follow certain conventions and practices 
+to achieve the intended goal.
+
+Examples of libraries
+
+Framework vs. Library
+
+
+Routing - A mechanism to map URLs to functions - Routing is a system for resource navigation.
+
+# Route - A part of the URL that determines what function to execute when a specific url is accessed or visited.
+
+www.myduka.com/products
+
+www.myduka.com - url
+/products - route/rule
+
+# How to implement routing in Flask Framework
+
+@app.route() - decorator function  => # (DEFINTION - WORK TO DO) CHATGPT - decorator function has a prefix - '@'
+
+www.myduka.com/products
+
+@app.route('/products')
+def products() :
+    products = fetch_data('products')
+    return products
+
+@app.route('/login')
+def login() :
+
+# Parameters that can be passed in a route function
+1. Rule - e.g. /, /products, /sales, /users - defines the path a user accesses in the browser
+
+DAY 71 2025-04-24 (Thursday)
+
+Types of route/rule errors
+404 - Client error
+200 - Successful
+300 - 
+500 - Server error
+
+We've been returning strings - moving one step forward
+# return a simple html page (home page) - serve html pages
+
+            MYDUKA Project Structure
+myduka - folder containing entire myduka project
+    -main.py
+    -database.py
+    -templates FOLDER => FIXED name (case-sensitive)
+        (all html files MUST be here)
+        index.html
+        sales.html
+        products.html
+    -static
+        (all static files - files that don't change much)
+        -styling => home.css, myduka.css, style.css
+        images
+        JS files
+        favicons - logo icon to identify website
+        fonts, pdf files
+
+# Rendering (returning data) - Process of serving html with Flask
+Goal: Display a html page/file using Flask
+
+# Implement:
+- We render html pages using functions provided by Flask
+    render_template() - this function:
+        1. has to be imported from Flask in order to be used.
+        2. takes some parameters
+            i. html pages - (full_name of the html page)
+                e.g. render_template("index.html")
+            ii. variables holding data
+
+# Create two html files - products.html, sales.html
+    - Render them using flask - render_template
+
+# DAY 72 2025-04-25 (Friday)
+
+127.0.0.1 - localhost
+
+# implementing passing data from Flask to html
+- to implement this we still have to use tools provided by Flask because Flask is a framework
+    # Example of a tool in Flask - Jinja
+
+    # What is Jinja?
+        - A templating engine that is integrated with Flask to render (or return) dynamic HTML pages. {Dynamic - can 
+            take some data which changes depending on the user input}
+        - Templating engine - A tool in web development used to generate dynamic HTML.
+
+    # What can Jinja do?
+        - Helps you pass data or perform Python logic inside HTML templates.
+
+    # How does Jinja work?
+        - Pre-defined templates already exist.
+        - Passing Jinja syntax inside these templates.
+        - Your Flask application provides data to be passed inside Jinja.
+        - Data is rendered.
+
+    # What can we pass inside Jinja?
+        1. Simple Variables
+            - Once you've passed this variable as parameter inside render_template
+                i. pass that variable inside Jinja
+                    - JINJA SYNTAX {{variable}} NB: Jinja is syntax - programmer writes Jinja.
+                    - To pass variable using Jinja, write the correct variable inside two curly braces i.e. {{}}
+                        e.g. name = "John Doe"
+                             return render_template("index.html",name = name)
+                             # inside your HTML (template)
+                             <p>Hello {{name}}</p>
+
+        2. Control Structures
+            i. Sequence - Executes program sequentially from top to bottom.
+            ii. Selection - Executes conditional statememts. e.g. if\else, switch\break
+            iii. Iteration - Executes loops i.e. instructions or code until a specified condition is met.
+                e.g. for, while, do-while
+            
+            # Implementing control structures with Jinja
+                Jinja syntax when implementing control structures:
+                    - {% if %}
+
+                Take Note:
+                    - You have to end the program
+                    - You have to define a starting point and an ending point
+
+                # Focus on if statememts & loops
+
+                # conditional statements - if
+                    x = input()
+                    if x < 10 :
+                        print("less than 10")
+                    else :
+                        print("larger than 10")
+
+Task:
+    1. Create another list in another route and loop through it using Jinja to pass list values in a html page.
+
+    2. Go and create tables using borrowed css {bootstrap} - use bootstrap to create tables with random data.

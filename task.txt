@@ -1,0 +1,8 @@
+TASK
+
+Modify your select and insert functions to be able 
+to select and insert data from any table.
+
+HINT: Let your function take parameters (table).
+
+    
