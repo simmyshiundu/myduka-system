@@ -61,10 +61,10 @@ def login() :
 
 DAY 71 2025-04-24 (Thursday)
 
-Types of route/rule errors
-404 - Client error
+HTTP response status codes
 200 - Successful
-300 - 
+300 - Redirection error
+404 - Client error
 500 - Server error
 
 We've been returning strings - moving one step forward
@@ -169,11 +169,93 @@ Display our database data on our browsers
 
 Assumption - You can already view your printed data on your terminal.
 
-1. Get our data to main.py from database.py
-    - using import functionality.
-    - import functions that fetch data (products, sales) inside main.py
-    - we're going to call these functions inside main.py using variables and then we pass those variables to HTML using Jinja.
+1. Get our data to main.py from database.py using import functionality.
+    - import functions that fetch data in (products, sales) tables inside main.py.
+    - we're going to call these functions inside main.py using variables and then we pass those variables to HTML using 
+    Jinja.
+    - we want to display our products and sales using tables.
+        # GOAL: Make it presentable to a user
+    - You want to display each product in their own row, we have to iterate/loop through your data and place each data in 
+    a row <tr>.
 
-    - we want to display our products
     - index.html, products.html, sales.html, dashboard.html
     - navbar
+
+# DAY 74 2025-04-29 (Tuesday)
+
+Posting Data
+
+# What is posting?
+    - Sending data from a client to a server {Flask} for processing.
+    - Client (Web browser, Mobile app) => the entity that sends requests.
+
+# Data flow 
+    - User will visit a route
+    - User fills out a form and submits it.
+    TAKE NOTE: Form action & method {HTTP Method} - Also name attribute
+        Action - Route mapping URL to a function e.g. /products, /sales
+
+        Method - HTTP Method: A way of telling Flask/Server what to do with resources.
+            e.g. GET, POST, PUT, DELETE
+                GET - getting/fetching a resource.
+                POST - sending data to a server.
+                PUT - update a resource.
+                DELETE - delete/erase/get rid of a resource.
+
+- Data is sent to Flask for processing.
+
+- From the action specified Flask will look for a function to execute.
+    # In that route, the HTTP method has to be specified as a second parameter in CAPS.
+- Flask will extract data from the form using a request object, validates it and saves it.
+- User will be redirected back to a page.
+    # Redirection - Sends a user to a different route after performing an action like form submission
+                  - Used with 'url_for()'
+                  SYNTAX: return redirect(url_for(''))
+
+    # request.method
+        - An attribute that specifies the HTTP method that the client used when making a request.
+
+    # request.form
+        - Allows the user to access/extract data from a form.
+        - Mimics a dictionary in the sense that your form data is stored in key-value pairs.
+        - The key in this case is the value of the name attribute in the form.
+
+        e.g. "p-name":"eggs"
+
+TASK:
+    - Pick a navbar from bootstrap and implement it.
+    - Implement the products' form inside a modal from bootstrap.
+    - Try posting sales.
+    - Start writing queries to fetch sales per day, sales per product, profit per product, profit per day.
+
+# DAY 74 2025-04-30 (Wednesday)
+
+GOAL: Post a sale
+
+Flask implementation is the same with the products implementation.
+Table - Sales has a foreign key.
+In the sales form:
+    - Select dropdown having the products i.e. loop through the products. Pick the pid and name from the iteration.
+    - Quantity
+
+Dashboard data:
+    - Profit per product.
+    - Profit per day.
+    - Sales per product.
+    - Sales per day.
+
+1. Profit per product
+    select products.name, sum((products.selling_price - products.buying_price) * sales.quantity) as profit from products
+    inner join sales on products.id = sales.pid group by products.name;
+
+2. Profit per day
+    select sales.created_at, sum((products.selling_price - products.buying_price) * sales.quantity) as profit from
+    products inner join sales on products.id = sales.pid group by sales.created_at;
+
+3. Sales per product
+    select products.name, sum(products.selling_price * sales.quantity) as revenue from products inner join sales on
+    products.id = sales.pid group by products.name;
+
+4. Sales per day
+    select sales.created_at, sum(products.selling_price * sales.quantity) as revenue from sales inner join products on
+    products.id = sales.pid group by sales.created_at;

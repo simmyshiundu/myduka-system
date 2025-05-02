@@ -21,7 +21,7 @@ for p in products:
     print(p)
 
 # query for displaying data in sales table
-cur.execute('select * from sales')
+cur.execute('select * from sales;')
 
 print('')
 print('list of tuples in sales table')
@@ -44,7 +44,7 @@ def fetchProducts():
 def fetchSales():
 
     # cur -> LOCAL VARIABLE which is used inside a function, hence 'cur' VARIABLE that exists outside a function can be used by a function, it doesn't have to exist inside a function.
-    cur.execute('select * from sales')
+    cur.execute('select * from sales;')
     sales = cur.fetchall()
     return sales
     # for s in sales:
@@ -66,9 +66,7 @@ cur.execute("insert into products(name,buying_price,selling_price,stock_quantity
 
 # from datetime import datetime
 now = datetime.now()
-
 cur.execute(f"insert into sales(pid,quantity,created_at)values(2,55.00,'{now}')")
-
 conn.commit()
 
 # INSERT TO PRODUCTS TABLE FUNCTION
@@ -77,13 +75,22 @@ def insert_products() :
     conn.commit()
 
 # INSERT TO SALES TABLE FUNCTION
-def insert_sales( ) :
+def insert_sales() :
     cur.execute(f"insert into sales(pid,quantity,created_at)values(2,55.00,'{now}')")
     conn.commit()
 
-insert_products()
-insert_sales()
+# insert sales - method 1 - takes values as parameters
+def insert_sales2(values) :
+    insert = "insert into sales(pid,quantity,created_at)values(%s,%s,'now()')"
+    cur.execute(insert,values)
+    conn.commit()
 
+# insert sales - method 2 - still takes values as parameters but doesn't use placeholders.
+# instead we replace placeholders with {values} parameters in a formatted string.
+def insert_sales3(values) :
+    insert = f"insert into sales(pid,quantity,created_at)values({values})"
+    cur.execute(insert)
+    conn.commit()
 
 # DAY 69 2025-04-22 (Tuesday)
 
@@ -91,9 +98,7 @@ insert_sales()
 # databases have to have atomicity/integrity
 
 
-# TASK
-
-# Modify your select and insert functions to be able to select and insert data from any table.
+# TASK: Modify your select and insert functions to be able to select and insert data from any table.
 # HINT: Let your function take parameters (table). 
 
 def fetch_data(table) :
@@ -127,14 +132,14 @@ print("Fetching data after modifying function:\n",products)
 
 
 # insert products - method 2 - still takes values as parameters but doesn't use placeholders.
-# instead we replace placeholders with {values} parameters in a formatted string
+# instead we replace placeholders with {values} parameters in a formatted string.
 def insert_products3(values) :
     insert = f"insert into products(name,buying_price,selling_price,stock_quantity)values{values}"
     cur.execute(insert)
     conn.commit() # save data operations
 
-product_values = ("Mango",40,50,100)
-insert_products3(product_values)
+product_values2 = ("Mango",40,50,100)
+insert_products3(product_values2)
 products = fetch_data('products')
 print("")
 print("Fetching products - Method 2:\n",products)
@@ -163,3 +168,41 @@ insert_data(table_2,sales_columns,sales_values)
 products = fetch_data('sales')
 print("")
 print("Sales data from the last method:\n",sales)
+
+# DAY 74 2025-04-30 (Wednesday)
+
+# DASHBOARD FUNCTION TO FIND PROFIT PER PRODUCT
+def profit_per_product() :
+    cur.execute("select products.name, sum((products.selling_price - products.buying_price) * sales.quantity) as profit from products inner join sales on products.id = sales.pid group by products.name;")
+    profit_per_product = cur.fetchall()
+    return profit_per_product
+
+profit_p_product = profit_per_product()
+print("Profit per product: ",profit_p_product)
+
+# DASHBOARD FUNCTION TO FIND PROFIT PER DAY
+def profit_per_day() :
+    cur.execute("select sales.created_at, sum((products.selling_price - products.buying_price) * sales.quantity) as profit from products inner join sales on products.id = sales.pid group by sales.created_at;")
+    profit_per_day = cur.fetchall()
+    return profit_per_day
+
+profit_p_day = profit_per_day()
+print("Profit per day: ",profit_p_day)
+
+# DASHBOARD FUNCTION TO FIND SALES PER PRODUCT
+def sales_per_product() :
+    cur.execute("select products.name, sum(products.selling_price * sales.quantity) as revenue from products inner join sales on products.id = sales.pid group by products.name;")
+    sales_per_product = cur.fetchall()
+    return sales_per_product
+
+sales_p_product = sales_per_product()
+print("Sales per product: ",sales_p_product)
+
+# DASHBOARD FUNCTION TO FIND SALES PER DAY
+def sales_per_day() :
+    cur.execute("select sales.created_at, sum(products.selling_price * sales.quantity) as revenue from sales inner join products on products.id = sales.pid group by sales.created_at;")
+    sales_per_day = cur.fetchall()
+    return sales_per_day
+
+sales_p_day = sales_per_day()
+print("Sales per day: ",sales_p_day)
