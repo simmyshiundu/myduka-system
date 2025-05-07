@@ -1,44 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block title %} Sales {% endblock %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sales</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-</head>
-
-<body>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="http://127.0.0.1:5000">MyDuka</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="http://127.0.0.1:5000/products">Products</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="http://127.0.0.1:5000/sales">Sales</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="http://127.0.0.1:5000/dashboard">Dashboard</a>
-          </li>
-          <!-- <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-              </li> -->
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <!-- <div class="container">
+{% block content %}
+<!-- <div class="container">
     <form action="/add_sales" method="post">
       <div class="mb-3">
         <label for="exampleInputProductID" class="form-label">Product ID</label>
@@ -55,52 +19,52 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div> -->
-  <!-- This is my sales page. -->
-  <div>
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Make Sale
-    </button>
+<!-- This is my sales page. -->
+<div>
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Make Sale
+  </button>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <!-- <div class="modal-header">
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div> -->
-          <div class="modal-body">
-            <form action="/make_sale" method="post">
-              <div>
-                <select name="p-id">
-                  <option value="">Select a product</option>
-                  {% for product in products %}
-                  <option value="{{product[0]}}">{{product[1]}}</option>
-                  {% endfor %}
-                </select>
-              </div>
-              <div>
-                <label for="">Quantity</label><br>
-                <input type="text" name="quantity">
-              </div><br>
-              <!-- <div>
+        <div class="modal-body">
+          <form action="/make_sale" method="post">
+            <div>
+              <select name="p-id">
+                <option value="">Select a product</option>
+                {% for product in products %}
+                <option value="{{product[0]}}">{{product[1]}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div>
+              <label for="">Quantity</label><br>
+              <input type="text" name="quantity">
+            </div><br>
+            <!-- <div>
             <button type="submit">Make Sale</button>
           </div> -->
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Make Sale</button>
-            </form>
-          </div>
-          <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Make Sale</button>
+          </form>
+        </div>
+        <!-- <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Make Sale</button>
       </div> -->
-        </div>
       </div>
     </div>
-
   </div>
-  <!-- <div>
+
+</div>
+<!-- <div>
         <p>My Sales Page</p>
         <p>{{sales}}</p>
         {% for sale in sales %}
@@ -109,33 +73,28 @@
         </ul>
         {% endfor %}
     </div> -->
-  <div>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Sales ID</th>
-          <th scope="col">Product ID</th>
-          <th scope="col">Quantity</th>
-          <th scope="col">Created At</th>
-        </tr>
-      </thead>
-      <tbody>
-        We're going to loop through our sales
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Sales ID</th>
+        <th scope="col">Product ID</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+      We're going to loop through our sales
 
-        {% for sale in sales %}
-        <tr>
-          <td>{{sale[0]}}</td>
-          <td>{{sale[1]}}</td>
-          <td>{{sale[2]}}</td>
-          <td>{{sale[3]}}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
-    crossorigin="anonymous"></script>
-</body>
-
-</html>
+      {% for sale in sales %}
+      <tr>
+        <td>{{sale[0]}}</td>
+        <td>{{sale[1]}}</td>
+        <td>{{sale[2]}}</td>
+        <td>{{sale[3]}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

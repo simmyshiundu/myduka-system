@@ -63,7 +63,7 @@ DAY 71 2025-04-24 (Thursday)
 
 HTTP response status codes
 200 - Successful
-300 - Redirection error
+300/302 - Redirection error
 404 - Client error
 500 - Server error
 
@@ -228,7 +228,7 @@ TASK:
     - Try posting sales.
     - Start writing queries to fetch sales per day, sales per product, profit per product, profit per day.
 
-# DAY 74 2025-04-30 (Wednesday)
+# DAY 75 2025-04-30 (Wednesday)
 
 GOAL: Post a sale
 
@@ -249,7 +249,7 @@ Dashboard data:
     inner join sales on products.id = sales.pid group by products.name;
 
 2. Profit per day
-    select sales.created_at, sum((products.selling_price - products.buying_price) * sales.quantity) as profit from
+    select date(sales.created_at), sum((products.selling_price - products.buying_price) * sales.quantity) as profit from
     products inner join sales on products.id = sales.pid group by sales.created_at;
 
 3. Sales per product
@@ -257,5 +257,149 @@ Dashboard data:
     products.id = sales.pid group by products.name;
 
 4. Sales per day
-    select sales.created_at, sum(products.selling_price * sales.quantity) as revenue from sales inner join products on
+    select date(sales.created_at), sum(products.selling_price * sales.quantity) as revenue from sales inner join products on
     products.id = sales.pid group by sales.created_at;
+
+TASK: Implement these queries inside functions in database.py and confirm you can see the data in your terminal, pass that
+data to dashboard.html using Flask and Jinja.
+
+# DAY 76 2025-05-02 (Friday)
+
+GOAL: Visualize the dashboard data using charts. We'll use charting libraries and implement our charts in a script.
+    1. Bar Chart - Helps us represent profit and sales per product.
+    2. Line Chart - Visualize any data with a timeframe e.g. date, profit and sales per day.
+
+1. CDN link - content delivery network
+2. canvas - where to place your chart in html - element/templating script will know what canvas to place the chart in
+    using an id - attribute
+
+TAKE NOTE: JavaScript does not recognize Decimal
+    - float
+    - safe - 
+
+TASK:
+    - Create a table called 'users' with columns; id, name, email, phone_number.
+    - Implement that line chart.
+
+# DAY 77 2025-05-05 (Monday)
+
+Profit per day and Sales per day
+
+Date - Common metric - x-axis
+y-axis => profit and sales - how profit compares to sales in relation to dates.
+
+You can fetch date from either profit per day or sales per day
+    - both are a list of tuples.
+    - each of these tuples has date metric as the first index - date metric is the same in both sales and profit.
+    - get that date from sales per day using list comprehension and get that date metric using indices.
+        date - index 0 - [0]\
+
+TASK:
+- home
+- products
+- sales
+- Dashboard
+
+- have a navbar that can gate to all pages - a footer
+styled & descriptive home page giving info about that software/project/POS 
+products - modal to add product, products table
+sales - modal with form containing a dropdown to select product, table for sale
+dashboard - 2 charts along with other relevant information
+    - style them completely.
+    - datatables.
+
+TASK:
+have a register.html webpage inside templates - form
+    - name
+    - phone_number
+    - email
+    - password
+
+Template Inheritance
+    - Functionality that allows you create a base template which contains common webpage elements like navbar, headers,
+    footers, title e.t.c.
+
+TASK: Create a base.html webpage inside temlates folder
+        - have common features in this base.html - footers, navigation, headers
+        - have the other templates inherit from the base template.
+
+base.html - base/parent template
+    <div class="container">
+        Navigation bar
+        This is where my header goes
+        <div>
+            {% block content %}
+                // pass whatever is unique to those pages
+            {% endblock %}
+        </div>
+        This is where my footer goes
+    </div>
+
+sample.html - other/child template
+    {% extends "base.html" %}
+    {% block title %} Sample Page {% endblock %}
+
+    {% block content %}
+        <p>Welcome to my sample page</p>
+    {% endblock %}
+
+# DAY 78 2025-05-06 (Tuesday)
+
+User Registration
+- users table
+
+create table users(
+    id primary key serial,
+    name varchar(100) not null,
+    phone_number varchar(255) not null,
+    email varchar(255) unique not null,
+    password varchar(255) not null
+); // NOT case-sensitive
+
+Register route - main.py
+
+    1. Taking user input from a register form.
+    2. Check that all inputs are filled correctly.
+    3. User posts his/her inforamation.
+        - method => POST - defined in the form and route.
+        - getting form data => request.form - gets user input posted from a form.
+        - request object => request.method - tells server what to do with data.
+        - PASSWORD HASHING => converts plain text password into random text i.e. a form that can't be easily understood.
+            - encoding.
+                - cryptic - for security purposes.
+                - bcrypt
+                    pip install flask-bcrypt
+                    pip show flask-bcrypt
+
+                    from flask_bcrypt import Bcrypt => main.py
+
+                    bcrypt = Bcrypt(app) # initialization
+
+    4. Check if user exists.
+        - If user exists : => SELECTS A USER USING THAT EMAIL
+            - let the user know they're already registered and tell them to login instead (flash messaging).
+        - else :
+            - add user => INSERT A USER
+            - redirect to login
+
+# have a login form
+werkzeug
+passlib
+
+# DAY 79 2025-05-07 (Wednesday)
+
+GET - get data
+POST - send data
+PUT - 
+
+- Getting user info from the user from form.
+- Extracting that data using request.
+- Check if the user exists:
+    - If they don't exist -> redirect to register.
+    - If they exist, login -> redirect to dashboard.
+        - check user password.
+        - bcrypt to compare hashed password and provided password
+        - if password is correct,
+            - redirect to dashboard.
+        - if password is incorrect,
+            - flash that password is incorrect.

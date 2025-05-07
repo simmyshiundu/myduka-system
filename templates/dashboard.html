@@ -1,43 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block title %} Dashboard {% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-</head>
+{% block content %}
+<!-- <div>
+    <p>{{profit_p_product}}</p>
+    <p>{{profit_p_day}}</p>
+    <p>{{sales_p_product}}</p>
+    <p>{{sales_p_day}}</p>
+</div> -->
+<div>
+    <p>{{product_name}}</p>
+    <p>{{p_profit}}</p>
+    <p>{{p_sales}}</p>
+</div><br>
+<div>
+    <canvas id="bar-chart" width="800" height="450"></canvas>
+</div><br>
+<div>
+    <canvas id="line-chart" width="800" height="450"></canvas>
+</div><br>
+<div>
+    <canvas id="line-chart-2" width="800" height="450"></canvas>
+</div><br>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+    // Bar chart
+    new Chart(document.getElementById("bar-chart"), {
+        type: 'bar',
+        data: {
+            labels: {{ product_name | safe}},    // x-axis
+        // y-axis
+        datasets: [
+        {
+            label: "Sales per product",
+            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+            data: {{ p_sales | safe}}
+                    },
+        {
+            label: "Profit per product",
+            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+            data: {{ p_profit | safe}}
+                    },
+    ]
+            },
+        options: {
+        legend: { display: false },
+        title: {
+            display: true,
+            text: 'Sales and Profit per Product'
+        }
+    }
+        });
 
-<body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="http://127.0.0.1:5000">MyDuka</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="http://127.0.0.1:5000/products">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="http://127.0.0.1:5000/sales">Sales</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="http://127.0.0.1:5000/dashboard">Dashboard</a>
-                    </li>
-                    <!-- <li class="nav-item">
-                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                  </li> -->
-                </ul>
-            </div>
-        </div>
-    </nav>
-</body>
+    // Line chart 2
+    new Chart(document.getElementById("line-chart-2"), {
+        type: 'line',
+        data: {
+            labels: {{ date | safe}},    // x-axis
+        // y-axis
+        datasets: [{
+            data: {{ p_day | safe}},
+        label: "Products per Day",
+        borderColor: "#3e95cd",
+        fill: false
+                }, {
+            data: {{ s_day | safe}},
+        label: "Sales per Day",
+        borderColor: "#8e5ea2",
+        fill: false
+                },
+    ]
+            },
+        options: {
+        title: {
+            display: true,
+            text: 'Sales and Profit per Day'
+        }
+    }
+        });
 
-</html>
+    // Line chart
+    new Chart(document.getElementById("line-chart"), {
+        type: 'line',
+        data: {
+            labels: {{ product_name | safe}},    // x-axis
+        // y-axis
+        datasets: [{
+            data: {{ p_sales | safe}},
+        label: "Sales per product",
+        borderColor: "#3e95cd",
+        fill: false
+                }, {
+            data: {{ p_profit | safe}},
+        label: "Profit per product",
+        borderColor: "#8e5ea2",
+        fill: false
+                },
+    ]
+            },
+        options: {
+        title: {
+            display: true,
+            text: 'Sales and Profit per Product'
+        }
+    }
+        });
+</script>
+{% endblock %}

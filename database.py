@@ -169,7 +169,7 @@ products = fetch_data('sales')
 print("")
 print("Sales data from the last method:\n",sales)
 
-# DAY 74 2025-04-30 (Wednesday)
+# DAY 75 2025-04-30 (Wednesday)
 
 # DASHBOARD FUNCTION TO FIND PROFIT PER PRODUCT
 def profit_per_product() :
@@ -182,7 +182,7 @@ print("Profit per product: ",profit_p_product)
 
 # DASHBOARD FUNCTION TO FIND PROFIT PER DAY
 def profit_per_day() :
-    cur.execute("select sales.created_at, sum((products.selling_price - products.buying_price) * sales.quantity) as profit from products inner join sales on products.id = sales.pid group by sales.created_at;")
+    cur.execute("select date(sales.created_at), sum((products.selling_price - products.buying_price) * sales.quantity) as profit from products inner join sales on products.id = sales.pid group by sales.created_at;")
     profit_per_day = cur.fetchall()
     return profit_per_day
 
@@ -200,9 +200,31 @@ print("Sales per product: ",sales_p_product)
 
 # DASHBOARD FUNCTION TO FIND SALES PER DAY
 def sales_per_day() :
-    cur.execute("select sales.created_at, sum(products.selling_price * sales.quantity) as revenue from sales inner join products on products.id = sales.pid group by sales.created_at;")
+    cur.execute("select date(sales.created_at), sum(products.selling_price * sales.quantity) as revenue from sales inner join products on products.id = sales.pid group by sales.created_at;")
     sales_per_day = cur.fetchall()
     return sales_per_day
 
 sales_p_day = sales_per_day()
 print("Sales per day: ",sales_p_day)
+
+# DAY 77 2025-05-05 (Monday)
+
+# Create the users' table on myduka database
+
+# cur.execute("create table users(id serial primary key, full_name varchar(255) not null, phone_number varchar(255) not null, email varchar(255) unique not null, password varchar(255) not null);")
+
+
+# DAY 78 2025-05-06 (Tuesday)
+
+def check_user(email) :
+    query = "select * from users where email = %s;"
+    cur.execute(query,(email,)) # comma tells python that data is a tuple.
+    user = cur.fetchone() # fetchall() returns a list of tuples, while fetchone() returns one tuple.
+    return user
+
+def add_user(user_details) :
+    query = "insert into users(full_name,phone_number,email,password)values(%s,%s,%s,%s);"
+    cur.execute(query,user_details)
+    conn.commit() # commit changes made to the database
+    cur.close() # closes database session
+
