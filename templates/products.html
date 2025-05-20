@@ -2,53 +2,50 @@
 {% block title %} Products {% endblock %}
 
 {% block content %}
-<div class="container">
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Add Products Here
-  </button>
+<!-- Add Products Modal -->
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <!-- <div class="modal-header">
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Add Products Here
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div> -->
-        <div class="modal-body">
-          <form action="/add_products" method="post">
-            <div class="mb-3">
-              <label for="exampleInputProductName" class="form-label">Product Name</label>
-              <input type="text" class="form-control" name="p-name" id="exampleInputProductName"
-                aria-describedby="emailHelp">
-            </div>
-            <div class="mb-3">
-              <label for="exampleInputBuyingPrice" class="form-label">Buying Price</label>
-              <input type="number" class="form-control" name="b-price" id="exampleInputBuyingPrice">
-            </div>
-            <div class="mb-3">
-              <label for="exampleInputSellingPrice" class="form-label">Selling Price</label>
-              <input type="number" class="form-control" name="s-price" id="exampleInputSellingPrice">
-            </div>
-            <div class="mb-3">
-              <label for="exampleInputStockQuantity" class="form-label">Stock Quantity</label>
-              <input type="number" class="form-control" name="quantity" id="exampleInputStockQuantity">
-            </div><br>
-            <!-- <button type="submit" class="btn btn-primary">Add Product</button> -->
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Add Product</button>
-          </form>
-        </div>
-        <!-- <div class="modal-footer">
+      <div class="modal-body">
+        <form action="/add_products" method="post">
+          <div class="mb-3">
+            <label for="exampleInputProductName" class="form-label">Product Name</label>
+            <input type="text" class="form-control" name="p-name" id="exampleInputProductName"
+              aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputBuyingPrice" class="form-label">Buying Price</label>
+            <input type="number" class="form-control" name="b-price" id="exampleInputBuyingPrice">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputSellingPrice" class="form-label">Selling Price</label>
+            <input type="number" class="form-control" name="s-price" id="exampleInputSellingPrice">
+          </div>
+          <!-- <button type="submit" class="btn btn-primary">Add Product</button> -->
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add Product</button>
+        </form>
+      </div>
+      <!-- <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary">Add Product</button>
         </div> -->
-      </div>
     </div>
   </div>
-
 </div>
+
+
 <!-- <div>
         <p>My Products Page</p>
         <p>{{products}}</p>
@@ -59,26 +56,79 @@
         {% endfor %}
     </div> -->
 <div>
-  <table class="table">
+  <table id="example" class="table table-striped">
     <thead>
       <tr>
         <th scope="col">Product ID</th>
         <th scope="col">Product Name</th>
         <th scope="col">Buying Price</th>
         <th scope="col">Selling Price</th>
-        <th scope="col">Stock Quantity</th>
+        <th>Edit Product</th>
       </tr>
     </thead>
     <tbody>
-      We're going to loop through our products
-
       {% for product in products %}
       <tr>
         <td>{{product[0]}}</td>
         <td>{{product[1]}}</td>
         <td>{{product[2]}}</td>
         <td>{{product[3]}}</td>
-        <td>{{product[4]}}</td>
+        <td>
+          <!-- Edit Products Modal -->
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#editModal{{ product[0] }}">
+            Edit Product
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="#editModal{{ product[0] }}" tabindex="-1"
+            aria-labelledby="#exampleModalLabel{{ product[0] }}" aria-hidden="true">
+            <div class="modal-dialog">
+              <form action="/update_product" method="post"></form>
+              <div class="modal-content">
+                <!-- <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="#editModal{{ product[0] }}">Edit Product</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div> -->
+                <div class="modal-body">
+                  <div>
+                    <!-- <form action="/update_product" method="post"> -->
+                    <!-- Hidden input for product ID -->
+                    <input type="hidden" value="{{ product[0] }}" name="p-id">
+                  </div>
+                  <!-- <div class="mb-3">
+                        <label for="productId{{ product[0] }}" class="form-label"></label>
+                        <input type="hidden" value="{{ product[0] }}" id="productId{{ product[0] }}" name="p-id">
+                      </div> -->
+
+                  <!-- Prefilled fields -->
+                  <div class="mb-3">
+                    <label for="productName{{ product[1] }}" class="form-label"></label>
+                    <input type="text" class="form-control" value="{{ product[1] }}" id="productName{{ product[1] }}"
+                      name="p-name">
+                  </div>
+                  <div class="mb-3">
+                    <label for="buyingPrice{{ product[2] }}" class="form-label"></label>
+                    <input type="number" class="form-control" value="{{ product[2] }}" id="buyingPrice{{ product[2] }}"
+                      name="b-price">
+                  </div>
+                  <div class="mb-3">
+                    <label for="sellingPrice{{ product[3] }}" class="form-label"></label>
+                    <input type="number" class="form-control" value="{{ product[3] }}" id="sellingPrice{{ product[3] }}"
+                      name="s-price">
+                  </div>
+                  <div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                  </div>
+                  <!-- </form> -->
+                </div>
+              </div>
+              </form>
+            </div>
+          </div>
+        </td>
       </tr>
       {% endfor %}
     </tbody>

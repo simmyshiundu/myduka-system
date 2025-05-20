@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %} Contact Us {% endblock %}
+
+{% block content %}
+<div>
+    <form action="/add_contact" method="post">
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Full Name</label>
+            <input type="text" class="form-control" name="full-name" id="exampleFormControlInput1" placeholder="Full Name">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Email Address</label>
+            <input type="email" class="form-control" name="email-address" id="exampleFormControlInput1" placeholder="name@example.com">
+        </div>
+        <!-- <div class="mb-3">
+            <label for="country-code">Country Code:</label>
+            <select id="country-code" name="country-code">
+                <option value="+1">🇺🇸 United States (+1)</option>
+                <option value="+44">🇬🇧 United Kingdom (+44)</option>
+                <option value="+91">🇮🇳 India (+91)</option>
+                <option value="+61">🇦🇺 Australia (+61)</option>
+                <option value="+81">🇯🇵 Japan (+81)</option>
+                <option value="+49">🇩🇪 Germany (+49)</option>
+                <option value="+33">🇫🇷 France (+33)</option>
+                Add more countries as needed
+            </select>
+        </div> -->
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" name="phone-number" id="exampleInputPhoneNumber">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Message</label>
+            <textarea class="form-control" name="message" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+    </form>
+</div>
+{% endblock %}

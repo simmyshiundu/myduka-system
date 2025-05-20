@@ -1,29 +1,11 @@
 {% extends "base.html" %}
-{% block title %} Sales {% endblock %}
+{% block title %} Stock {% endblock %}
 
 {% block content %}
-<!-- <div class="container">
-    <form action="/add_sales" method="post">
-      <div class="mb-3">
-        <label for="exampleInputProductID" class="form-label">Product ID</label>
-        <input type="text" class="form-control" name="p-id" id="exampleInputProductID" aria-describedby="emailHelp">
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputQuantity" class="form-label">Quantity</label>
-        <input type="number" class="form-control" name="quantity" id="exampleInputQuantity">
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputCreatedAt" class="form-label">Created At</label>
-        <input type="text" class="form-control" name="created-at" id="exampleCreatedAt">
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-  </div> -->
-<!-- This is my sales page. -->
 <div>
   <!-- Button trigger modal -->
   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Make Sale
+    Add Stock
   </button>
 
   <!-- Modal -->
@@ -35,7 +17,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div> -->
         <div class="modal-body">
-          <form action="/make_sale" method="post">
+          <form action="/add_stock" method="post">
             <div>
               <select name="p-id">
                 <option value="">Select a product</option>
@@ -45,14 +27,14 @@
               </select>
             </div>
             <div>
-              <label for="">Quantity</label><br>
-              <input type="text" name="quantity">
+              <label for="">Stock Quantity</label><br>
+              <input type="text" name="stock-quantity">
             </div><br>
             <!-- <div>
             <button type="submit">Make Sale</button>
           </div> -->
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Make Sale</button>
+            <button type="submit" class="btn btn-primary">Add Stock</button>
           </form>
         </div>
         <!-- <div class="modal-footer">
@@ -62,37 +44,57 @@
       </div>
     </div>
   </div>
-
-</div>
-<!-- <div>
-        <p>My Sales Page</p>
-        <p>{{sales}}</p>
-        {% for sale in sales %}
-        <ul>
-            <li>{{sale}}</li>
-        </ul>
-        {% endfor %}
-    </div> -->
-<div>
-  <table id="example" class="table table-striped">
+  <div>
+    <!-- <table class="table">
     <thead>
       <tr>
-        <th scope="col">Sales ID</th>
+        <th scope="col">Stock ID</th>
         <th scope="col">Product ID</th>
-        <th scope="col">Quantity</th>
+        <th scope="col">Stock Quantity</th>
         <th scope="col">Created At</th>
       </tr>
     </thead>
     <tbody>
-      {% for sale in sales %}
+      We're going to loop through our stocks
+
+      {% for s in stock %}
       <tr>
-        <td>{{sale[0]}}</td>
-        <td>{{sale[1]}}</td>
-        <td>{{sale[2]}}</td>
-        <td>{{sale[3]}}</td>
+        <td>{{s[0]}}</td>
+        <td>{{s[1]}}</td>
+        <td>{{s[2]}}</td>
+        <td>{{s[3]}}</td>
       </tr>
       {% endfor %}
     </tbody>
-  </table>
+  </table> -->
+    <table id="example" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Stock ID</th>
+          <th>Product ID</th>
+          <th>Stock Quantity</th>
+          <th>Created At</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in stock %}
+        <tr>
+          <td>{{s[0]}}</td>
+          <td>{{s[1]}}</td>
+          <td>{{s[2]}}</td>
+          <td>{{s[3]}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <!-- <tfoot>
+        <tr>
+          <th>Stock ID</th>
+          <th>Product ID</th>
+          <th>Stock Quantity</th>
+          <th>Created At</th>
+        </tr>
+      </tfoot> -->
+    </table>
+  </div>
 </div>
 {% endblock %}

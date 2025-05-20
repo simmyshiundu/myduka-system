@@ -32,6 +32,102 @@ Examples of libraries
 
 Framework vs. Library
 
+#concept of house building
+#scenario 1 - Awadh's House - library
+    He decides to do the entire process himself
+    Identify what he needs to build a house e.g land,funds,
+    roof,bricks,windows, doors, tools (hammer,nails,saw),wood
+    all materials are provided for you and placed in a store
+    he starts  building the entire house himself- 
+        including design of the house and planning and the actual building
+
+
+#scenario 2 - Letina's house  - framework
+    he decides that scenario 1 is too much work
+    he seeks building experts - architect and engineer and the builders
+    they give him a design and tools he would need and steps of how the 
+    process will take place
+
+
+
+library - will give you tools to use
+        - how these tools are to be used is dependent on you
+        -flexible to the programmer in usage
+
+
+framework - will still give you tools to use but has predefined structure/ rules/conventions
+            -usage of these tools is based on these rules
+            -rigid /strict in usage
+            examples:
+            Flask, Django, FastAPI for Python
+            .NET for C#
+            Spring for Java
+            Ruby on Rails for Ruby
+            Express for NodeJS
+
+
+#routing -route
+    -mechanism  to map urls to functions - system for resource navigation
+    -connects a url to a function in your Flask app
+    url - the full address used to access resources on the web
+        - e.g www.techcamp.co.ke
+            www.microsoft.com
+    route - part of the url determines what function to execute when a 
+            specific part of the url is accessed
+            e.g www.techcamp.co.ke/login
+                www.microsoft.com/x-box
+
+
+#implementation in Python using Flask
+@app.route() - decorator function
+    -research on what decorator 
+    -decorator is function that determines/ allows you to modify the behaviour
+    of another function
+
+    -this function can take some parameters:
+    1.Rule - the path a user wants to access e.g / , /products, /sales, /about-us
+    2.
+
+from flask import Flask
+
+app = Flask(__name__)
+#__name__ - special built in variable representing name of the current file
+          - helps Flask know where your project is located and where it starts
+
+127.0.0.1:5000- localhost 
+
+#the functions inside created routes have to be unique in naming
+#view function is basically the function inside your route
+
+#created a simple flask  app and implemented simple routing
+#we've managed to return string data in multiple routes
+
+#can we return something better? - data
+return a simple html page - next step
+
+#flask gives you a tool to return html place in place of raw strings
+#this tool is a function called render_template()
+- a function / tool provided by flask to render/ serve / provide html files
+index.html - your page - render_template("index.html")
+- this function can take some arguments:
+    1.a html page - render_template("index.html")
+for this to happen you have t follow some rules / conventions of Flask:
+why? - because flask is a framework
+
+flask will require you to have a predefined project structure.
+
+#we were able to return and see our html pages (inside template) in our browser
+#next step
+-#what more can we return / see using flask? 
+
+render_template() - a function to render html pages
+    - can return html pages
+    - can also return variables or data inside variable
+
+#return data from flask and send to html
+#how do we achieve this? - you have to use tools provided by Flask
+                        - you have to follow rules defined by Flask.
+
 
 Routing - A mechanism to map URLs to functions - Routing is a system for resource navigation.
 
@@ -273,9 +369,11 @@ GOAL: Visualize the dashboard data using charts. We'll use charting libraries an
 2. canvas - where to place your chart in html - element/templating script will know what canvas to place the chart in
     using an id - attribute
 
+    https://tobiasahlin.com/blog/chartjs-charts-to-get-you-started/
+
 TAKE NOTE: JavaScript does not recognize Decimal
     - float
-    - safe - 
+    - safe - ignores syntax errors.
 
 TASK:
     - Create a table called 'users' with columns; id, name, email, phone_number.
@@ -388,10 +486,6 @@ passlib
 
 # DAY 79 2025-05-07 (Wednesday)
 
-GET - get data
-POST - send data
-PUT - 
-
 - Getting user info from the user from form.
 - Extracting that data using request.
 - Check if the user exists:
@@ -403,3 +497,131 @@ PUT -
             - redirect to dashboard.
         - if password is incorrect,
             - flash that password is incorrect.
+
+# DAY 80 2025-05-08 (Thursday)
+
+FLASH MESSAGING
+
+FLASHING
+    - One time notifications to the user based on user action.
+    - Bootstrap colours
+        - success (green)
+        - error/danger (red)
+        - info (blue)
+        - warning (yellow)
+
+- import
+- replace print() with flash()
+- implement flashing in the HTML pages you want it viewed.
+
+NOTE: need secret key to store data in a cookie.
+
+from flask import Flask, flash
+
+Flashing with categories
+    https://flask.palletsprojects.com/en/stable/patterns/flashing/
+
+SESSIONS
+    - A way to store user data in between requests.
+    - Keeping a user logged in, page protection, storing user preferences.
+
+# DAY 81 2025-05-09 (Friday)
+
+Styling of MYDUKA Project using Bootstrap
+    - Cards
+    - Carousels
+    - Style tables.
+    - Get rid of Jinja on Dashboard.
+    - Make website look presentable. (RESEARCH)
+        - Style 'Home/index.html' webpage/HTML page.
+        - Style 'Dashboard'.
+
+# DAY 82 2025-05-12 (Monday) => BIRTHDAY
+
+    WORK ON MYDUKA PROJECT
+
+# DAY 83 2025-05-13 (Tuesday)
+
+delete from sales;
+delete from products;
+
+# create a new table called stock
+CREATE TABLE stock (
+    id SERIAL PRIMARY KEY,
+    pid INTEGER REFERENCES products(id),
+    stock_quantity INTEGER,
+    created_at TIMESTAMP
+);
+
+# changes to products table
+ALTER TABLE products DROP COLUMN stock_quantity;
+
+drop database myduka;
+create database myduka;
+
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    buying_price NUMERIC(20, 2),
+    selling_price NUMERIC(20, 2)
+);
+
+CREATE TABLE sales (
+    id SERIAL PRIMARY KEY,
+    pid INTEGER REFERENCES products(id),
+    quantity INTEGER,
+    created_at TIMESTAMP
+);
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    full_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phone_number VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+insert and select for sales/stock.
+
+https://datatables.net/
+
+# DAY 84 2025-05-14 (Wednesday)
+
+1. gotten rid of stock_quantity in products.
+2. created a stock table.
+3. stock - keeps track of the quantity of products
+    - /stock
+        - get stock
+        - get products
+
+    - /add_stock
+        - post stock in this route
+
+making sales
+    - check for available stock
+        - if insufficient
+            - flash relevant info - "Low stock"
+        - if sufficient
+            - make sale
+            - flash "Sale made"
+
+https://datatables.net/examples/styling/bootstrap5.html
+
+pick td with modal
+pick the route - update product in main.py
+pick update function in database.py
+
+CDN link - Content Delivery Network link
+
+Letting Brian (Contact Info) - Saturday 11.30 a.m.
+
+https://github.con/l-tting
+
+0714056473
+
+# DAY 85 2025-05-17 (Saturday)
+
+Datatables
+    - 
+
+
