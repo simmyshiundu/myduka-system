@@ -622,6 +622,28 @@ https://github.con/l-tting
 # DAY 85 2025-05-17 (Saturday)
 
 Datatables
-    - 
 
+10
+15
+20
+100
+-145 total stock
+
+# making a sale
+    - check if you have enough products to sell
+        -12
+        -20
+        -5
+        -37 - total sold
+
+availableStock = totalStock - totalSold
+
+null - doesn't exist
+0 - actual value
+
+type casting
+
+UPDATE table_name
+SET column1 = value1, column = value2, ...
+WHERE condition;
 
