@@ -155,7 +155,7 @@ def login() :
 # What parameters can we pass in a route function?
 1. Rule - e.g. /, /products, /sales, /users - defines the path a user accesses in the browser
 
-DAY 71 2025-04-24 (Thursday)
+# DAY 71 2025-04-24 (Thursday)
 
 HTTP response status codes
 200 - Successful
